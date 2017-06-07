@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocalizacion en HTML5</title>
+    <script type="text/javascript">
+        function iniciar(){
+            var boton=document.getElementById('obtener');
+            boton.addEventListener('click', obtener, false);
+        }
+        function obtener(){
+            navigator.geolocation.getCurrentPosition(mostrar, errores);
+        }
+        function mostrar(position){
+            var ubicacion=document.getElementById('ubicacion');
+
+            var datos='';
+            datos+='Latitud: ' + position.coords.latitude + '<br>';
+            datos+='Longitud: ' + position.coords.longitude + '<br>';
+            datos+='Exactitud: ' + position.coords.accuracy + '<br>';
+            ubicacion.innerHTML=datos;
+
+            var ubicacion2=document.getElementById('ubicacion2');
+            var mapurl='http://maps.google.com/maps/api/staticmap?center=' + position.coords.latitude + ',' + position.coords.longitude + '&size=600x400&markers=' + position.coords.latitude + ',' + position.coords.longitude + '|' + position.coords.latitude + ',' + position.coords.longitude + '&sensor=TRUE';
+            //http://maps.google.com/maps/api/staticmap?center=-12.00982,-77.075541&size=600x400&markers=-12.00982,-77.075541|-12.00982,-77.075541&sensor=TRUE
+           //var mapurl='http://maps.google.com/maps/api/staticmap?center=25.3176452,82.97391440000001,&zoom=15&markers=25.3176452,82.97391440000001|25.3176452,82.97391440000001&path=color:0x0000FF80|weight:5|25.3176452,82.97391440000001&size=175x175&sensor=';
+            //var mapurl='http://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=600x400';
+            //var mapurl='http://maps.google.com/maps/api/staticmap?center=25.3176452,82.97391440000001,&zoom=15&markers=icon:http://www.megaadresse.com/images/icons/google-maps.png|25.3176452,82.97391440000001&path=color:0x0000FF80|weight:5|25.3176452,82.97391440000001&size=175x175';
+            //http://maps.google.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=14&size=512x512&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false
+            ubicacion2.innerHTML='<img src="' + mapurl + '">';
+        }
+        function errores(error){
+            alert('Error:' + error.code +' ' + error.message);
+        }
+    window.addEventListener('load', iniciar,false);
+    </script>
+</head>
+<body>
+<section id="ubicacion">
+    <button id="obtener">Obtener mi ubicación</button>
+</section>
+<section id="ubicacion2">
+    <!-- <div id="map_canvas" style="width: 640px; height: 400px;"></div>-->
+</section>
+</body>
+</html>
